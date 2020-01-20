@@ -3,7 +3,6 @@ package config
 import (
 	"fmt"
 	"os"
-
 	"gopkg.in/ini.v1"
 )
 

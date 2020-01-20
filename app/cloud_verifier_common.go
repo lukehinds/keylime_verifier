@@ -18,13 +18,21 @@ func InitTLS() {
 	} // needs to return None if not enabled
 
 	log.Printf("Setting up TLS...")
+	tls_dir := config.GetConfig("cloud_verifier", "tls_dir")
+	GenerateTlsDir(tls_dir)
+	crypto.CmdInit(tls_dir)
+	// ca_util.setpassword(my_key_pw)
+	// ca_util.cmd_init(tls_dir)
+	// ca_util.cmd_mkcert(tls_dir, socket.gethostname())
+	// ca_util.cmd_mkcert(tls_dir, 'client')
+}
+
+func GenerateTlsDir(tls_dir string) string {
 	my_cert := config.GetConfig("cloud_verifier", "my_cert")
 	ca_cert := config.GetConfig("cloud_verifier", "ca_cert")
 	my_priv_key := config.GetConfig("cloud_verifier", "my_priv_key")
 	my_key_pw := config.GetConfig("cloud_verifier", "my_key_pw")
-	tls_dir := config.GetConfig("cloud_verifier", "tls_dir")
 	generatedir := "cv_ca" // maybe we should get this from config
-
 	if strings.Contains("generate", tls_dir) {
 		if !strings.Contains("default", my_cert) || !strings.Contains("default", my_priv_key) || !strings.Contains("default", ca_cert) {
 			log.Fatal("To use tls_dir=generate, options ca_cert, my_cert, and private_key must all be set to 'default'")
@@ -42,18 +50,20 @@ func InitTLS() {
 			if _, err := os.Stat(tls_dir); os.IsNotExist(err) {
 				log.Printf("Make directory %v", tls_dir)
 				os.Mkdir(tls_dir, os.FileMode(0700))
+			} else {
+				log.Println("Dir already exist")
 			}
 			if strings.Contains("my_key_pw", my_key_pw) {
 				log.Println("CAUTION: using default password for CA, please set private_key_pw to a strong password")
 			}
-			crypto.CmdInit(tls_dir)
-			// ca_util.setpassword(my_key_pw)
-			// ca_util.cmd_init(tls_dir)
-			// ca_util.cmd_mkcert(tls_dir, socket.gethostname())
-			// ca_util.cmd_mkcert(tls_dir, 'client')
-
+		}
+	} else {
+		if _, err := os.Stat(tls_dir); os.IsNotExist(err) {
+			log.Printf("Make directory %v", tls_dir)
+			os.Mkdir(tls_dir, os.FileMode(0700))
 		}
 	}
+	return tls_dir
 }
 
 func GetRestfulParams(myurl string) string {
