@@ -1,7 +1,7 @@
 package crypto
 
 import (
-	"keylime_verifier/config"
+	"github.com/lukehinds/keylime_verifier/config"
 	"log"
 	"os"
 	"path/filepath"

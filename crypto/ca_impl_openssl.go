@@ -6,7 +6,7 @@ import (
 	"crypto/x509"
 	"crypto/x509/pkix"
 	"encoding/pem"
-	"keylime_verifier/config"
+	"github.com/lukehinds/keylime_verifier/config"
 	"log"
 	"math/big"
 	"os"

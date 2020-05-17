@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"keylime_verifier/app"
-	"keylime_verifier/config"
+	"github.com/lukehinds/keylime_verifier/app"
+	"github.com/lukehinds/keylime_verifier/config"
 	"log"
 	"net/http"
 
@@ -50,7 +50,7 @@ func main() {
 	// db.init
 	// db.update_all_agents('operational_state', cloud_verifier_common.CloudAgent_Operational_State.SAVED)
 	app.InitTLS()
-	port := config.GetConfig("general", "cloudverifier_port")
+	port := config.GetConfig("cloud_verifier", "cloudverifier_port")
 	log.Printf("Starting Cloud Verifier on port %v,  use <Ctrl-C> to stop", port)
 
 	router := chi.NewRouter()

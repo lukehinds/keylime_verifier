@@ -1,9 +1,9 @@
 package app
 
 import (
-	"keylime_verifier/common"
-	"keylime_verifier/config"
-	"keylime_verifier/crypto"
+	"github.com/lukehinds/keylime_verifier/common"
+	"github.com/lukehinds/keylime_verifier/config"
+	"github.com/lukehinds/keylime_verifier/crypto"
 	"log"
 	"net/url"
 	"os"
